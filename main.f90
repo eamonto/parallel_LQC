@@ -116,7 +116,7 @@
 
     !!Le da los valores iniciales a las funciones de onda
     !!en cada parte de la malla (o cada proceso)
-    call initial_data
+    call initialdata
 
     !!Calcula el valor de los oservables: volume,P_phi (y la norma)
     !!cada proceso calcula su parte y luego se unifican los valores

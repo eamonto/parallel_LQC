@@ -1,5 +1,5 @@
 ! ============================================================================
-! initial_data.f90
+! initialdata.f90
 ! ============================================================================
 ! Le da los valores iniciales a las funciones de onda en cada parte de 
 ! la malla (o cada proceso)
