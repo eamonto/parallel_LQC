@@ -1,0 +1,11 @@
+if(iter<n) \
+plot "test_grid1/mod_psi.x" i iter w p; \
+print iter; \
+iter=iter+1; \
+pause 0.3;\
+reread
+
+pause 1000
+
+
+

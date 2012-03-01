@@ -1,0 +1,6 @@
+n=140
+iter=0
+#set xrange [-25000:25000]
+#set yrange [0:0.00001]
+load "script1"
+

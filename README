@@ -1,0 +1,201 @@
+
+! ===========================================================================
+! README
+! ===========================================================================
+! Integration of Loop Quantum Cosmology Equations
+
+!     Copyright (C) 2012  Edison Montoya, eamonto@gmail.com
+
+!     This program is free software: you can redistribute it and/or modify
+!     it under the terms of the GNU General Public License as published by
+!     the Free Software Foundation, either version 3 of the License, or
+!     (at your option) any later version.
+
+!     This program is distributed in the hope that it will be useful,
+!     but WITHOUT ANY WARRANTY; without even the implied warranty of
+!     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!     GNU General Public License for more details.
+
+!     You should have received a copy of the GNU General Public License
+!     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+! Up to date: 29 Feb 2012					
+
+
+This is a readme for the program that makes the integration of the
+Loop Quantum Cosmology equations for a flat FRW universe. 
+Here is specified how use the program, the archives and the functions.
+
+
+* The COMPILATION is make with mpif90 , execute the command 
+
+$make
+
+This generate the archive lqc.out
+
+* The EXECUTION is with
+
+$make run
+
+This runs the program lqc.out
+
+* The OUTPUT of the program is print in the output directory 
+specified in the archive param.f90, parameter -> output_dir,
+the explanation of this archive is made later. 
+The output files are:
+
+
+mod_psi.x     	 ---> Contains the module of wave funtion over the grid
+		      for all times in the integration. The data are:
+
+		      #time 
+		      position in the grid , module of wave funtion 
+		      
+
+mod_pi.x	 ---> Contains the module of the derivative 
+		      (respect to the time) of wave function 
+		      over the grid for all times in the integration. 
+		      The data are written as:
+
+		      #time 
+		      position in the grid , module of the derivate 
+		      
+
+
+volume.t	 ---> Contains the evolution of volume observable, 
+		      it is written as:
+
+		      time, volume
+
+
+norm.t		 ---> Contains the evolution of the norm of wave function,
+		      it is written as:
+
+		      time, norm
+
+
+re_P_phi.x	 ---> Contains the evolution of real part of momentum from
+		      escalar field, it is written as:
+
+		      time, real part of momentum
+
+
+im_P_phi.x	 ---> Contains the evolution of imaginary part of momentum from
+		      escalar field, it is written as:
+
+		      time, imaginary part of momentum
+ 
+
+param.f90	 ---> Is a copy of the archive whit the parameter.
+
+
+Now is describe the archives contains in this directory and the role that
+they play in the solution of the problem.
+
+
+============================================================================
+parallel_initial_data.f90
+============================================================================
+Aca es donde conocen el rango los procesadores y se dividen los puntos 
+de las mallas entre los procesadores.
+
+
+============================================================================
+allocate.f90
+============================================================================
+Alocación de la memoria para cada procesador
+
+
+============================================================================
+initialize.f90
+============================================================================
+Inicializa todos las variables a cero o valores predefinidos
+
+
+============================================================================
+parallel_grid.f90
+============================================================================
+Halla las longitudes de cada parte de la malla para cada procesador
+
+
+============================================================================
+grid.f90
+============================================================================
+Construye la malla para cada proceso
+
+
+============================================================================
+initial_data.f90
+============================================================================
+Le da los valores iniciales a las funciones de onda en cada parte de 
+la malla (o cada proceso)
+
+
+============================================================================
+observables.f90
+============================================================================
+Calcula el valor de los oservables: volume, P_phi (y la norma).
+Cada proceso calcula su parte y luego se unifican los valores en el
+proceso cero.
+
+
+============================================================================
+output_0D.f90
+============================================================================
+Escribe la salida de los observables,
+Solo el proceso cero tiene esta información.
+
+
+============================================================================
+parallel_output_1D.f90
+============================================================================
+Coordina la escritura de datos a disco de los procesadores.
+
+
+============================================================================
+output_1D.f90
+============================================================================
+Escribe el output de la función de onda y la derivada de la función de onda.
+
+
+============================================================================
+store_levels.f90
+============================================================================
+Asigna valores iniciales a las variables necesarias para el RK4.
+
+
+============================================================================
+sources.f90
+============================================================================
+Asigna los valores (dados por las ecuaciones de LQC) a las variables 
+que se van a integrar.
+
+
+============================================================================
+internal_boundaries.f90
+============================================================================
+Comunica los valores de las fronteras la malla a los vecinos de cada 
+proceso.
+
+
+============================================================================
+external_boundaries .f90
+============================================================================
+Implementa las condiciones de frontera de la malla completa.
+
+
+============================================================================
+evolution.f90
+============================================================================
+Coordina la evolución de las variables que se estan integrando en cada
+paso del RK4.
+
+
+============================================================================
+step_rk4.f90
+============================================================================
+Realiza la evolución de las variables que se estan integrando en cada
+paso del RK4.
+
+
+
